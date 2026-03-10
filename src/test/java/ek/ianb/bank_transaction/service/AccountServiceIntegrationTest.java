@@ -1,7 +1,5 @@
 package ek.ianb.bank_transaction.service;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,16 +28,14 @@ class AccountServiceIntegrationTest {
 
         accountService.transferMoney(1, 2, new BigDecimal("100"));
 
-        BigDecimal a = jdbcTemplate.queryForObject(
-                "SELECT balance FROM user_account WHERE account_id = 1",
+        BigDecimal balanceA = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = 1",
                 BigDecimal.class);
 
-        BigDecimal b = jdbcTemplate.queryForObject(
-                "SELECT balance FROM user_account WHERE account_id = 2",
+        BigDecimal balanceB = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = 2",
                 BigDecimal.class);
 
-        assertEquals(new BigDecimal("900.00"), a);
-        assertEquals(new BigDecimal("2100.00"), b);
+        assertEquals(new BigDecimal("900.00"), balanceA);
+        assertEquals(new BigDecimal("2100.00"), balanceB);
     }
 
     @Test
@@ -49,15 +45,13 @@ class AccountServiceIntegrationTest {
                 accountService.transferMoney(1, 99, new BigDecimal("100"))
         );
 
-        BigDecimal a = jdbcTemplate.queryForObject(
-                "SELECT balance FROM user_account WHERE account_id = 1",
+        BigDecimal balanceA = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = 1",
                 BigDecimal.class);
 
-        BigDecimal b = jdbcTemplate.queryForObject(
-                "SELECT balance FROM user_account WHERE account_id = 2",
+        BigDecimal balanceB = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = 2",
                 BigDecimal.class);
 
-        assertEquals(new BigDecimal("1000.00"), a);
-        assertEquals(new BigDecimal("2000.00"), b);
+        assertEquals(new BigDecimal("1000.00"), balanceA);
+        assertEquals(new BigDecimal("2000.00"), balanceB);
     }
 }

@@ -9,15 +9,15 @@ import java.math.BigDecimal;
 @Service
 public class AccountService {
 
-    private final AccountRepository repo;
+    private final AccountRepository accountRepository;
 
-    public AccountService(AccountRepository repo) {
-        this.repo = repo;
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     @Transactional
-    public void transferMoney(int fromId, int toId, BigDecimal amount) {
-        repo.withdraw(fromId, amount);
-        repo.deposit(toId, amount);
+    public void transferMoney(int fromAccountId, int toAccountID, BigDecimal amount) {
+        accountRepository.withdraw(fromAccountId, amount);
+        accountRepository.deposit(toAccountID, amount);
     }
 }

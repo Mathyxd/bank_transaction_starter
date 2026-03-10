@@ -8,24 +8,18 @@ import java.math.BigDecimal;
 @Repository
 public class AccountRepository {
 
-    private final JdbcTemplate jdbc;
+    private final JdbcTemplate jdbcTemplate;
 
-    public AccountRepository(JdbcTemplate jdbc) {
-        this.jdbc = jdbc;
+    public AccountRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void withdraw(int id, BigDecimal amount) {
-        jdbc.update(
-                "UPDATE user_account SET balance = balance - ? WHERE account_id = ?",
-                amount, id);
+    public void withdraw(int accountId, BigDecimal amount) {
+        jdbcTemplate.update("UPDATE user_account SET balance = balance - ? WHERE account_id = ?", amount, accountId);
     }
 
-    public void deposit(int id, BigDecimal amount) {
-
-        int rows = jdbc.update(
-                "UPDATE user_account SET balance = balance + ? WHERE account_id = ?",
-                amount, id);
-
+    public void deposit(int accountId, BigDecimal amount) {
+        int rows = jdbcTemplate.update("UPDATE user_account SET balance = balance + ? WHERE account_id = ?", amount, accountId);
         if (rows == 0) {
             throw new IllegalArgumentException("Account not found");
         }
