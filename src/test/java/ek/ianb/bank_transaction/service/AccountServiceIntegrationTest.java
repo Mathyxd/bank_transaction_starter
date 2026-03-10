@@ -25,33 +25,27 @@ class AccountServiceIntegrationTest {
 
     @Test
     void transferMoney_commits_whenBothAccountsExist() {
+        // Act
+        // 1. Call the transferMoney method to transfer 100 from account with account_id = 1 to account with account_id = 2
+        // 2. Call the jdbcTemplate.queryForObject method to obtain the actual balance from user_account where account_id = 1
+        // 3. Call the jdbcTemplate.queryForObject method to obtain the actual balance from user_account where account_id = 2
+        // Assert
+        // 4. Assert that the balance in account with account_id = 1 is as expected
+        // 5. Assert that the balance in account with account_id = 2 is as expected
 
-        accountService.transferMoney(1, 2, new BigDecimal("100"));
-
-        BigDecimal balanceA = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = 1",
-                BigDecimal.class);
-
-        BigDecimal balanceB = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = 2",
-                BigDecimal.class);
-
-        assertEquals(new BigDecimal("900.00"), balanceA);
-        assertEquals(new BigDecimal("2100.00"), balanceB);
     }
 
     @Test
     void transferMoney_rollsBack_whenDestinationAccountDoesNotExist() {
 
-        assertThrows(IllegalArgumentException.class, () ->
-                accountService.transferMoney(1, 99, new BigDecimal("100"))
-        );
+        // Act and assert
+        // 1. Assert that the accountService.transferMoney method throws an IllegalArgumentException exception
+        //    when trying to transfer money to an account_id which does not exist
+        // 2. Call the jdbcTemplate.queryForObject method to obtain the actual balance from user_account where account_id = 1
+        // 3. Call the jdbcTemplate.queryForObject method to obtain the actual balance from user_account where account_id = 2
+        // Assert
+        // 4. Assert that the balance in account with account_id = 1 is as expected
+        // 5. Assert that the balance in account with account_id = 2 is as expected
 
-        BigDecimal balanceA = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = 1",
-                BigDecimal.class);
-
-        BigDecimal balanceB = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = 2",
-                BigDecimal.class);
-
-        assertEquals(new BigDecimal("1000.00"), balanceA);
-        assertEquals(new BigDecimal("2000.00"), balanceB);
     }
 }
