@@ -40,7 +40,7 @@ class AccountServiceIntegrationTest {
 
         // Act and assert
         // 1. Assert that the accountService.transferMoney method throws an IllegalArgumentException exception
-        //    when trying to transfer money to an account_id which does not exist
+        //    when trying to transfer money to an account_id which does not exist (Hint: assertThrows())
         // 2. Call the jdbcTemplate.queryForObject method to obtain the actual balance from user_account where account_id = 1
         // 3. Call the jdbcTemplate.queryForObject method to obtain the actual balance from user_account where account_id = 2
         // Assert
