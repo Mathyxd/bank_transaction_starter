@@ -27,11 +27,17 @@ class AccountServiceIntegrationTest {
     void transferMoney_commits_whenBothAccountsExist() {
         // Act
         // 1. Call the transferMoney method to transfer 100 from account with account_id = 1 to account with account_id = 2
+        accountService.transferMoney(1,2,BigDecimal.valueOf(100));
         // 2. Call the jdbcTemplate.queryForObject method to obtain the actual balance from user_account where account_id = 1
+        Integer balance1 = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = ?", Integer.class, 1);
         // 3. Call the jdbcTemplate.queryForObject method to obtain the actual balance from user_account where account_id = 2
+        Integer balance2 = jdbcTemplate.queryForObject("SELECT balance FROM user_account WHERE account_id = ?", Integer.class, 2);
+
         // Assert
         // 4. Assert that the balance in account with account_id = 1 is as expected
+        assertEquals(900, balance1);
         // 5. Assert that the balance in account with account_id = 2 is as expected
+        assertEquals(2100, balance2);
 
     }
 
